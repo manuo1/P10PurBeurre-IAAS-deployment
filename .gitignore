@@ -1,0 +1,4 @@
+P10venv/
+.env
+__pycache__
+.coverage
