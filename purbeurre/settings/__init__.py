@@ -19,13 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = "èmn2zq8tmhcu872gpc9xlt=ùfewh-ylpo07wkt#=ra0$cjdàek"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
-DEBUG = False if os.environ.get("ENV", "development") == "production" else True
+DEBUG = True
 
-ALLOWED_HOSTS = ["purbeurre-mo1.herokuapp.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["165.22.118.210", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'purbeurredb',
         'USER': 'manuo',
-        'PASSWORD': os.environ['datatbases_password'],
+        'PASSWORD': 'mdp',
         'HOST': 'localhost',
         'PORT': '5432',
     }
