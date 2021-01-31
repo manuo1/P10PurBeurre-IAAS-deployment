@@ -2,3 +2,7 @@ P10venv/
 .env
 __pycache__
 .coverage
+
+purbeurre/settings/production.py
+__pycache__
+purbeurre/staticfiles/
