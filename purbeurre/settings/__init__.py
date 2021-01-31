@@ -11,10 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
-import django_heroku
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,7 +23,7 @@ SECRET_KEY = "èmn2zq8tmhcu872gpc9xlt=ùfewh-ylpo07wkt#=ra0$cjdàek"
 # DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = ["165.22.118.210", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -149,8 +147,6 @@ AUTH_USER_MODEL = 'app_users.User'
 
 LOGIN_URL = 'loginPage'
 LOGIN_REDIRECT_URL = 'profilePage'
-
-django_heroku.settings(locals())
 
 LOGGING = {
     'version': 1,
