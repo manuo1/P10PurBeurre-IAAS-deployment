@@ -136,7 +136,6 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'app_users.User'
 LOGIN_URL = 'loginPage'
 LOGIN_REDIRECT_URL = 'profilePage'
-django_heroku.settings(locals())
 
 LOGGING = {
     'version': 1,
