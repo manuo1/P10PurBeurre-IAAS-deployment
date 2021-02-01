@@ -19,7 +19,7 @@ jobs:
       DATABASES_NAME: 'purbeurredb'
       DATABASES_USER: 'manuo'
       DATABASES_PASSWORD: 'mdp'
- 
+
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
@@ -36,7 +36,7 @@ jobs:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5          
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -50,6 +50,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run migrations
       run: python manage.py migrate
+    - name: Run collectstatic
+      run: python manage.py collectstatic
     - name: Run tests
       run: python manage.py test
-    
