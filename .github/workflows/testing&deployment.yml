@@ -55,5 +55,16 @@ jobs:
       run: python manage.py migrate
     - name: Run collectstatic
       run: python manage.py collectstatic
+      # next step to add firefox driver to system
+      # download geckodriver extract and copy in geckodriver directory
+      # delette tar.gz file
+      # add geckodriver to system path
+    - name: Get the Firefox driver and add it to the system paths
+      run: |
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz
+        mkdir geckodriver
+        tar -xzf geckodriver-v0.28.0-linux64.tar.gz -C geckodriver
+        rm geckodriver-v0.28.0-linux64.tar.gz
+        export PATH=$PATH:$PWD/geckodriver
     - name: Run tests
       run: echo $pwd && python manage.py test
