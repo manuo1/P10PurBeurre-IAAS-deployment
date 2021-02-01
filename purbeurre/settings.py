@@ -11,19 +11,20 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+import django_heroku
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-SECRET_KEY = "yoursecretkey"
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG']
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-
+ALLOWED_HOSTS = ["165.22.118.210", "localhost", "127.0.0.1"]
 
 # Application definition
 
@@ -70,21 +71,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'NAME': os.environ['DATABASES_NAME'],
+        'USER': os.environ['DATABASES_USER'],
+        'PASSWORD': os.environ['DATABASES_PASSWORD'],
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -120,13 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'fr'
-
 TIME_ZONE = 'Europe/Paris'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -140,12 +135,10 @@ STATIC_ROOT = [
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
-
 AUTH_USER_MODEL = 'app_users.User'
-
 LOGIN_URL = 'loginPage'
 LOGIN_REDIRECT_URL = 'profilePage'
+django_heroku.settings(locals())
 
 LOGGING = {
     'version': 1,
