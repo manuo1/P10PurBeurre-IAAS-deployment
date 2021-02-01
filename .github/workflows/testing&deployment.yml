@@ -44,11 +44,11 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Adding environment variables 
       env:
-          	SECRET_KEY = 'secret_key'
-            DEBUG = False
-            DATABASES_NAME = 'purbeurredb'
-            DATABASES_USER = 'manuo'
-            DATABASES_PASSWORD = 'mdp'
+        SECRET_KEY: 'secret_key'
+        DEBUG: False
+        DATABASES_NAME: 'purbeurredb'
+        DATABASES_USER: 'manuo'
+        DATABASES_PASSWORD: 'mdp'
     - name: Run collectstatic
       run: python manage.py collectstatic
     - name: Run migrations
