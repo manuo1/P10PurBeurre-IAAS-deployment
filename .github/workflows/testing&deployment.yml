@@ -1,0 +1,58 @@
+name: testing and deployment
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the data for postgreSQL
+        env:
+          POSTGRES_DB: 'purbeurredb'
+          POSTGRES_USER: 'manuo'
+          POSTGRES_PASSWORD: 'mdp'
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5          
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Adding environment variables 
+      env:
+          	SECRET_KEY = 'secret_key'
+            DEBUG = False
+            DATABASES_NAME = 'purbeurredb'
+            DATABASES_USER = 'manuo'
+            DATABASES_PASSWORD = 'mdp'
+    - name: Run collectstatic
+      run: python manage.py collectstatic
+    - name: Run migrations
+      run: python manage.py migrate
+    - name: Run tests
+      run: python manage.py test
+    
