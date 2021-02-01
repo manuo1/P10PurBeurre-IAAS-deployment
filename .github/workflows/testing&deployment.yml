@@ -55,11 +55,5 @@ jobs:
       run: python manage.py migrate
     - name: Run collectstatic
       run: python manage.py collectstatic
-    - name: Get Geckodriver 
-      run: |
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz
-        mkdir geckodriver
-        tar -xzf geckodriver-v0.28.0-linux64.tar.gz -C geckodriver
-        export PATH=$PATH:$PWD/geckodriver
     - name: Run tests
-      run: python manage.py test
+      run: echo $pwd && python manage.py test
