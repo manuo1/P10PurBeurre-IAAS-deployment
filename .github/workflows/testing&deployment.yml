@@ -37,9 +37,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        # Map port 5432 on the Docker host to port 5432 on the nginx container
         ports:
           - 5432:5432
-
 
     steps:
     - uses: actions/checkout@v2
@@ -55,5 +55,9 @@ jobs:
       run: python manage.py migrate
     - name: Run collectstatic
       run: python manage.py collectstatic
+    - name: Run geckodriver
+      run: |
+        which geckodriver
+        geckodriver --version
     - name: Run tests
       run: python manage.py test
