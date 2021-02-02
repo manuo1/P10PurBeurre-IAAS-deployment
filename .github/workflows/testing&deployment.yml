@@ -75,4 +75,4 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan  165.22.118.210 >> ~/.ssh/known_hosts
     - name: create a folder for test
-      run: ssh manuo1@$165.22.118.210 "mkdir test"
+      run: ssh manuo1@165.22.118.210 "mkdir test"
