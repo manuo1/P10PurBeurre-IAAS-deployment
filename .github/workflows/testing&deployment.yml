@@ -75,5 +75,5 @@ jobs:
         echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
         chmod 600 $HOME/.ssh/id_rsa
         echo "${{ secrets.ID_RSA_PUB }}" > $HOME/.ssh/id_rsa.pub
-        ssh manuo1@165.22.118.210
+        ssh -o StrictHostKeyChecking=no manuo1@165.22.118.210
         mkdir test
