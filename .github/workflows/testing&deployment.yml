@@ -93,7 +93,7 @@ jobs:
             source ../env/bin/activate
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
-            python manage.py migrate
-            sudo service postgresql restart
-            sudo supervisorctl restart purbeurre-mo1-gunicorn
+            python manage.py migrate -S
+            sudo -S service postgresql restart
+            sudo -S supervisorctl restart purbeurre-mo1-gunicorn
             exit
