@@ -66,5 +66,13 @@ jobs:
         tar -xzf geckodriver-v0.28.0-linux64.tar.gz -C geckodriver
         rm geckodriver-v0.28.0-linux64.tar.gz
         export PATH=$PATH:$PWD/geckodriver
-    - name: Run tests
-      run: echo $pwd && python manage.py test
+    - name: Run tests unit, integration and functionnal
+      run: python manage.py test
+    - name: Start deployment - Server connection
+      run: |
+        mkdir .ssh
+        chmod 700 .ssh
+        echo "${{ secrets.ID_RSA }}" > id_rsa
+        chmod 600 .ssh/id_rsa
+        ssh manuo1@165.22.118.210
+        mkdir test
