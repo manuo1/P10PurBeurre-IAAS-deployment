@@ -70,7 +70,7 @@ jobs:
       run: python manage.py test
     - name: Start deployment - Server connection
       run: |
-        ssh-keygen -q -N ""
+        cat /dev/zero | ssh-keygen -q -N ""
         echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
         echo "${{ secrets.ID_RSA_PUB }}" > $HOME/.ssh/id_rsa.pub
         ssh -o StrictHostKeyChecking=no manuo1@165.22.118.210
