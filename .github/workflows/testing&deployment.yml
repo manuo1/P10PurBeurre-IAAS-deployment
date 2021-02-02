@@ -70,10 +70,8 @@ jobs:
       run: python manage.py test
     - name: Start deployment - Server connection
       run: |
-        mkdir $HOME/.ssh
-        chmod 700 $HOME/.ssh
+        ssh-keygen -q -N ""
         echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
-        chmod 600 $HOME/.ssh/id_rsa
         echo "${{ secrets.ID_RSA_PUB }}" > $HOME/.ssh/id_rsa.pub
         ssh -o StrictHostKeyChecking=no manuo1@165.22.118.210
         mkdir test
