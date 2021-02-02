@@ -70,8 +70,10 @@ jobs:
       run: python manage.py test
     - name: Start deployment - Server connection
       run: |
-        eval $(ssh-agent -s)
-        '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > $HOME/.ssh/config'
-        ssh-add <(echo "${{ secrets.ID_RSA }}")
+        mkdir $HOME/.ssh
+        chmod 700 $HOME/.ssh
+        echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
+        chmod 600 $HOME/.ssh/id_rsa
+        echo "${{ secrets.ID_RSA_PUB }}" > $HOME/.ssh/id_rsa.pub
         ssh manuo1@165.22.118.210
         mkdir test
