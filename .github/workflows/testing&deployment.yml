@@ -70,9 +70,9 @@ jobs:
       run: python manage.py test
     - name: Start deployment - Server connection
       run: |
-        mkdir .ssh
-        chmod 700 ~/.ssh/
-        echo "${{ secrets.ID_RSA }}" > id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        mkdir $HOME/.ssh
+        chmod 700 $HOME/.ssh
+        echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
+        chmod 600 $HOME/.ssh/id_rsa
         ssh manuo1@165.22.118.210
         mkdir test
