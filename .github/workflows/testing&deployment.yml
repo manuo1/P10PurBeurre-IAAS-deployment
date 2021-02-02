@@ -7,8 +7,11 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+# #############################################################################
+# test job
+# #############################################################################
 
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,10 +22,7 @@ jobs:
       DATABASES_NAME: 'purbeurredb'
       DATABASES_USER: 'manuo'
       DATABASES_PASSWORD: 'mdp'
-
-    # Service containers to run with `container-job`
     services:
-      # Label used to access the service container
       postgres:
         # Docker Hub image
         image: postgres
@@ -40,7 +40,6 @@ jobs:
         # Map port 5432 on the Docker host to port 5432 on the nginx container
         ports:
           - 5432:5432
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -68,6 +67,16 @@ jobs:
         export PATH=$PATH:$PWD/geckodriver
     - name: Run tests unit, integration and functionnal
       run: python manage.py test
+# #############################################################################
+# deployment job
+# #############################################################################
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    # will not deploy if tests fail 
+    needs: test
+    steps:
+
     - name: Setup ssh
       run: |
           mkdir -p ~/.ssh
