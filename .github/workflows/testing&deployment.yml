@@ -8,11 +8,11 @@ on:
 
 jobs:
 # #############################################################################
-# test job
+# Tests execution Job
 # #############################################################################
 
   test:
-    name: Test Job
+    name: Tests execution Job
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -74,7 +74,7 @@ jobs:
   deploy:
     # deploy only if we push to the master branch
     if: github.ref == 'refs/heads/master'
-    name: Deploy Job
+    name: Deployment Job
     runs-on: ubuntu-latest
     # will not deploy if tests fail
     needs: test
@@ -87,4 +87,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.ID_RSA }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          script: cd ${{ secrets.PROJECT_PATH }} && mkdir test
+          script: |
+            cd ${{ secrets.PROJECT_PATH }}
+            mkdir test 
