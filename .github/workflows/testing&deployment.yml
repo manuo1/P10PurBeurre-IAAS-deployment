@@ -12,6 +12,7 @@ jobs:
 # #############################################################################
 
   test:
+    name: Test Job
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -71,17 +72,19 @@ jobs:
 # deployment job
 # #############################################################################
   deploy:
-    name: deploy
+    # deploy only if we push to the master branch
+    if: github.ref == 'refs/heads/master'
+    name: Deploy Job
     runs-on: ubuntu-latest
-    # will not deploy if tests fail 
+    # will not deploy if tests fail
     needs: test
     steps:
-
-    - name: Setup ssh
-      run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan  165.22.118.210 >> ~/.ssh/known_hosts
-    - name: create a folder for test
-      run: ssh manuo1@165.22.118.210 "mkdir test"
+      - uses: actions/checkout@v1
+      - name: Pull from server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.ID_RSA }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          script: cd ${{ secrets.PROJECT_PATH }} && mkdir test
