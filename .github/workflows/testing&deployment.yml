@@ -71,7 +71,7 @@ jobs:
     - name: Start deployment - Server connection
       run: |
         eval $(ssh-agent -s)
-        '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+        '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > $HOME/.ssh/config'
         ssh-add <(echo "${{ secrets.ID_RSA }}")
         ssh manuo1@165.22.118.210
         mkdir test
