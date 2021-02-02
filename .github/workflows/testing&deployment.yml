@@ -68,12 +68,10 @@ jobs:
         export PATH=$PATH:$PWD/geckodriver
     - name: Run tests unit, integration and functionnal
       run: python manage.py test
-    - name: Start deployment - Server connection
-      run: |
-        mkdir -p $HOME/.ssh
-        chmod 700 $HOME/.ssh
-        echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
-        chmod 600 $HOME/.ssh/id_rsa
-        echo "${{ secrets.ID_RSA_PUB }}" > $HOME/.ssh/id_rsa.pub
-        ssh -o StrictHostKeyChecking=no manuo1@165.22.118.210
-        mkdir test
+    - name: ssh deploy
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.ID_RSA }}
+        REMOTE_HOST: '165.22.118.210'
+        REMOTE_USER: 'manuo1'
+        TARGET: '/home/manuo1/purbeurre-mo1/'
