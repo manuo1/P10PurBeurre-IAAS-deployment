@@ -68,11 +68,11 @@ jobs:
         export PATH=$PATH:$PWD/geckodriver
     - name: Run tests unit, integration and functionnal
       run: python manage.py test
-    - name: Start deployment - Server connection
+    - name: Setup ssh
       run: |
-        mkdir -p $HOME/.ssh
-        chmod 700 $HOME/.ssh
-        echo "${{ secrets.ID_RSA }}" > $HOME/.ssh/id_rsa
-        chmod 600 $HOME/.ssh/id_rsa
-        echo "${{ secrets.ID_RSA_PUB }}" > $HOME/.ssh/id_rsa.pub
-        ssh -o StrictHostKeyChecking=no manuo1@165.22.118.210 "mkdir test"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan  165.22.118.210 >> ~/.ssh/known_hosts
+    - name: create a folder for test
+      run: ssh manuo1@$165.22.118.210 "mkdir test"
