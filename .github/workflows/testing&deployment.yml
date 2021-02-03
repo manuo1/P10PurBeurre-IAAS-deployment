@@ -18,8 +18,8 @@ jobs:
       matrix:
         python-version: [3.8]
     env:
+      ENVIRONMENT: 'production'
       SECRET_KEY: 'secret_key'
-      DEBUG: False
       DATABASES_NAME: 'purbeurredb'
       DATABASES_USER: 'manuo'
       DATABASES_PASSWORD: 'mdp'

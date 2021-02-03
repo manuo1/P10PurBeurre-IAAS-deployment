@@ -12,17 +12,9 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ['SECRET_KEY']
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
-
-ALLOWED_HOSTS = ["165.22.118.210", "localhost", "127.0.0.1"]
 
 # Application definition
 
@@ -128,44 +120,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+
 AUTH_USER_MODEL = 'app_users.User'
 LOGIN_URL = 'loginPage'
 LOGIN_REDIRECT_URL = 'profilePage'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': (
-                '%(asctime)s [%(process)d] [%(levelname)s] '
-                + 'pathname=%(pathname)s lineno=%(lineno)s '
-                + 'funcname=%(funcName)s %(message)s'
-            ),
-            'datefmt': '%Y-%m-%d %H:%M:%S',
-        },
-        'simple': {'format': '%(levelname)s %(message)s'},
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'testlogger': {
-            'handlers': ['console'],
-            'level': 'INFO',
-        }
-    },
-}
-
-DEBUG_PROPAGATE_EXCEPTIONS = True
