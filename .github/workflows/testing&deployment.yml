@@ -87,7 +87,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.ID_RSA }}
           passphrase: ${{ secrets.PASSPHRASE }}
-
           script: |
             cd ${{ secrets.PROJECT_PATH }}
             git pull
@@ -95,7 +94,5 @@ jobs:
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
             python manage.py migrate
-        - name: PostgreSQL restart
-          run: sudo service postgresql restart
-        - name: Gunicorn restart
-          run: sudo supervisorctl restart purbeurre-mo1-gunicorn
+            echo '${{ secrets.PASSPHRASE }}' | sudo -S service postgresql restart
+            echo '${{ secrets.PASSPHRASE }}' | sudo -S supervisorctl restart purbeurre-mo1-gunicorn
