@@ -88,11 +88,11 @@ jobs:
           key: ${{ secrets.ID_RSA }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd ${{ secrets.PROJECT_PATH }}
+            cd purbeurre-mo1
             git pull
             source ../env/bin/activate
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
             python manage.py migrate
-            echo '${{ secrets.PASSPHRASE }}' | sudo -S service postgresql restart
-            echo '${{ secrets.PASSPHRASE }}' | sudo -S supervisorctl restart purbeurre-mo1-gunicorn
+            echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S service postgresql restart
+            echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S supervisorctl restart purbeurre-mo1-gunicorn
