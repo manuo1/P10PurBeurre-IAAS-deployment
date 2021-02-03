@@ -1,0 +1,67 @@
+name: testing on pull request
+
+on:
+  pull_request
+
+jobs:
+# #############################################################################
+# Tests execution Job
+# #############################################################################
+
+  test:
+    name: Tests execution Job
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    env:
+      SECRET_KEY: 'secret_key'
+      DEBUG: False
+      DATABASES_NAME: 'purbeurredb'
+      DATABASES_USER: 'manuo'
+      DATABASES_PASSWORD: 'mdp'
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the data for postgreSQL
+        env:
+          POSTGRES_DB: 'purbeurredb'
+          POSTGRES_USER: 'manuo'
+          POSTGRES_PASSWORD: 'mdp'
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        # Map port 5432 on the Docker host to port 5432 on the nginx container
+        ports:
+          - 5432:5432
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run migrations
+      run: python manage.py migrate
+    - name: Run collectstatic
+      run: python manage.py collectstatic
+      # next step to add firefox driver to system
+      # download geckodriver extract and copy in geckodriver directory
+      # delette tar.gz file
+      # add geckodriver to system path
+    - name: Get the Firefox driver and add it to the system paths
+      run: |
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux64.tar.gz
+        mkdir geckodriver
+        tar -xzf geckodriver-v0.28.0-linux64.tar.gz -C geckodriver
+        rm geckodriver-v0.28.0-linux64.tar.gz
+        export PATH=$PATH:$PWD/geckodriver
+    - name: Run tests unit, integration and functionnal
+      run: python manage.py test
