@@ -14,7 +14,6 @@ context = {'search_form': ProductSearchForm()}
 
 
 def index(request):
-    je met une erreur là
     """manage the index page."""
     return render(request, 'index.html', context)
 
