@@ -8,9 +8,14 @@ ALLOWED_HOSTS = ["165.22.118.210"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+sentry_logging = LoggingIntegration(
+    level=logging.INFO,        # Capture info and above as breadcrumbs
+    event_level=logging.INFO  # Send errors as events
+)
+
 sentry_sdk.init(
     dsn="https://751878c9886d41ed853ed05124aa3c62@o516111.ingest.sentry.io/5622155",
-    integrations=[DjangoIntegration()],
+    integrations=[DjangoIntegration(), sentry_logging],
 
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.

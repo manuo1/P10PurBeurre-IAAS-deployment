@@ -60,7 +60,7 @@ class Command(BaseCommand):
 
     def add_food_products_in_database(self, data_to_add):
         """add cleaned and formated food products in data base."""
-        self.stdout.write('\nAjout des données dans la base :')
+        self.stdout.write('\nAjout des données dans la base...')
         for product in data_to_add:
             """add product to the FoodProduct table."""
             product_to_add = FoodProduct(**product['data'])
