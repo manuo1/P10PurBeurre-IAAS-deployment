@@ -1,8 +1,8 @@
 import sentry_sdk
 
 from .common import *
-from sentry_sdk.integrations.django import ( DjangoIntegration,
-                                            LoggingIntegration )
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 ALLOWED_HOSTS = ["165.22.118.210"]
 
