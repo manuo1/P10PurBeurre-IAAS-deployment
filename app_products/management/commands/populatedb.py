@@ -28,7 +28,9 @@ class Command(BaseCommand):
         cleaner = Cleaner()
         data_to_add = []
         page_number = 1
-        self.stdout.write('Téléchargement des aliments...')
+        self.stdout.write('\nDonnées alimentaires avant la mise à jour :')
+        self.display_db_infos()
+        self.stdout.write('\nTéléchargement des aliments...')
         while len(data_to_add) < quantity:
             raw_products_list = download.raw_data(page_number)
             cleaned_products_list = cleaner.clean(raw_products_list)
@@ -37,11 +39,28 @@ class Command(BaseCommand):
                 data_to_add = data_to_add[:quantity]
                 break
             page_number += 1
-        self.stdout.write('{} aliments téléchargés'.format(len(data_to_add)))
+        self.stdout.write('\n{} aliments téléchargés'.format(len(data_to_add)))
         return data_to_add
+
+    def display_db_infos(self):
+        products_qty = FoodProduct.objects.all().count()
+        categories_qty = FoodCategory.objects.all().count()
+        joins_qty = FoodProduct.objects.filter(categories__gte=1).count()
+        total_rows_for_food_data = products_qty + categories_qty + joins_qty
+
+        self.stdout.write(
+            '\n{} lignes en base pour les données alimentaires\n'
+            '({} aliments, {} categories, {} jointures)'.format(
+                total_rows_for_food_data,
+                products_qty,
+                categories_qty,
+                joins_qty,
+            )
+        )
 
     def add_food_products_in_database(self, data_to_add):
         """add cleaned and formated food products in data base."""
+        self.stdout.write('\nAjout des données dans la base :')
         for product in data_to_add:
             """add product to the FoodProduct table."""
             product_to_add = FoodProduct(**product['data'])
@@ -66,18 +85,5 @@ class Command(BaseCommand):
                 )
                 """ then builds the association"""
                 product_to_associate.categories.add(category_to_associate)
-
-        products_qty = FoodProduct.objects.all().count()
-        categories_qty = FoodCategory.objects.all().count()
-        joins_qty = FoodProduct.objects.filter(categories__gte=1).count()
-        total_rows_for_food_data = products_qty + categories_qty + joins_qty
-
-        self.stdout.write(
-            '{} lignes en base pour les données alimentaires\n'
-            '({} aliments, {} categories, {} jointures)'.format(
-                total_rows_for_food_data,
-                products_qty,
-                categories_qty,
-                joins_qty,
-            )
-        )
+        self.stdout.write('\nDonnées alimentaires après la mise à jour :')
+        self.display_db_infos()

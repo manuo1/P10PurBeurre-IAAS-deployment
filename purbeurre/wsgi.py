@@ -11,12 +11,11 @@ from dotenv import find_dotenv, load_dotenv
 from django.core.wsgi import get_wsgi_application
 
 
-"""this part will designate the right settings file """
-"""to use depending on the environment"""
+""" this part will load environment variable and designate the """
+""" right settings file to use depending on the environment"""
 load_dotenv(find_dotenv())
 environment = os.environ['ENVIRONMENT']
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
     'purbeurre.settings.{}'.format(environment))
-""" end of environment settings part"""
 
 application = get_wsgi_application()
