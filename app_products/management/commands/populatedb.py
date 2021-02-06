@@ -7,6 +7,8 @@ from app_products.models import FoodCategory, FoodProduct
 from .offdata.cleaner import Cleaner
 from .offdata.download import Download
 
+logger = logging.getLogger(__name__)
+
 class Command(BaseCommand):
     help = """Populate database with food products from the Open Food Fact API,
             Requires a quantity of food products to be added,
@@ -87,5 +89,5 @@ class Command(BaseCommand):
                 product_to_associate.categories.add(category_to_associate)
         self.stdout.write('\nDonnées alimentaires après la mise à jour :')
         self.stdout.write(self.db_infos())
-        logging.info('Mise à jour des données alimentaires\n{}'.format(
+        logger.info('Mise à jour des données alimentaires\n{}'.format(
             self.db_infos()))
