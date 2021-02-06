@@ -1,3 +1,4 @@
+import logging
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 
@@ -6,6 +7,7 @@ from app_products.models import FoodCategory, FoodProduct
 from .offdata.cleaner import Cleaner
 from .offdata.download import Download
 
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     help = """Populate database with food products from the Open Food Fact API,
@@ -29,7 +31,7 @@ class Command(BaseCommand):
         data_to_add = []
         page_number = 1
         self.stdout.write('\nDonnées alimentaires avant la mise à jour :')
-        self.display_db_infos()
+        self.stdout.write(self.db_infos())
         self.stdout.write('\nTéléchargement des aliments...')
         while len(data_to_add) < quantity:
             raw_products_list = download.raw_data(page_number)
@@ -42,13 +44,12 @@ class Command(BaseCommand):
         self.stdout.write('\n{} aliments téléchargés'.format(len(data_to_add)))
         return data_to_add
 
-    def display_db_infos(self):
+    def db_infos(self):
         products_qty = FoodProduct.objects.all().count()
         categories_qty = FoodCategory.objects.all().count()
         joins_qty = FoodProduct.objects.filter(categories__gte=1).count()
         total_rows_for_food_data = products_qty + categories_qty + joins_qty
-
-        self.stdout.write(
+        db_infos = (
             '\n{} lignes en base pour les données alimentaires\n'
             '({} aliments, {} categories, {} jointures)'.format(
                 total_rows_for_food_data,
@@ -57,6 +58,7 @@ class Command(BaseCommand):
                 joins_qty,
             )
         )
+        return db_infos
 
     def add_food_products_in_database(self, data_to_add):
         """add cleaned and formated food products in data base."""
@@ -86,4 +88,6 @@ class Command(BaseCommand):
                 """ then builds the association"""
                 product_to_associate.categories.add(category_to_associate)
         self.stdout.write('\nDonnées alimentaires après la mise à jour :')
-        self.display_db_infos()
+        self.stdout.write(self.db_infos())
+        logger.info('Mise à jour des données alimentaires\n{}'.format(
+            self.db_infos()))
