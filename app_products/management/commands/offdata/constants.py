@@ -2,7 +2,7 @@ API_OFF_URL = "https://fr.openfoodfacts.org/cgi/search.pl?"
 
 API_OFF_PARAMS = {
     'action': 'process',
-    'sort_by': 'unique_scans_n',
+    'sort_by': 'created_t', 
     'json': 'true',
     'page': 1,
     'page_size': 1000,
