@@ -17,7 +17,7 @@ sentry_logging = LoggingIntegration(
 )
 
 sentry_sdk.init(
-    dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
+    dsn= "https://751878c9886d41ed853ed05124aa3c62@o516111.ingest.sentry.io/5622155",
     integrations=[DjangoIntegration(), sentry_logging],
 
     # Set traces_sample_rate to 1.0 to capture 100%
