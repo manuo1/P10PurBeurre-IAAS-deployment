@@ -2,23 +2,20 @@ import logging
 import sentry_sdk
 
 from .common import *
+from sentry_sdk import set_level
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 
+
 ALLOWED_HOSTS = ["165.22.118.210"]
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# DEFAUT event_level=logging.ERROR
-sentry_logging = LoggingIntegration(
-    level=logging.INFO,        # Capture info and above as breadcrumbs
-    event_level=logging.INFO   # Send info as events
-)
+set_level("DEBUG")
 
 sentry_sdk.init(
     dsn= "https://751878c9886d41ed853ed05124aa3c62@o516111.ingest.sentry.io/5622155",
-    integrations=[DjangoIntegration(), sentry_logging],
+    integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
@@ -35,8 +32,6 @@ sentry_sdk.init(
     # something more human-readable.
     # release="myapp@1.0.0",
 )
-
-
 
 """
     level:
