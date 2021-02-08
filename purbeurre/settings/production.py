@@ -29,16 +29,16 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
-        'log_file': {
+        'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': '/home/manuo1/logs/django.log',
+            'filename': [os.path.join(BASE_DIR, 'django.log')]
         },
 
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'log_file'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': True,
         },
