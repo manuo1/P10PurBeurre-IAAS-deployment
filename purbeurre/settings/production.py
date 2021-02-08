@@ -30,34 +30,33 @@ sentry_sdk.init(
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'INFO', # WARNING by default. Change this to capture more than warnings.
+        'handlers': ['sentry'],
+    },
     'formatters': {
         'verbose': {
-            'format': (
-                '%(asctime)s [%(process)d] [%(levelname)s] '
-                + 'pathname=%(pathname)s lineno=%(lineno)s '
-                + 'funcname=%(funcName)s %(message)s'
-            ),
-            'datefmt': '%Y-%m-%d %H:%M:%S',
+            'format': '%(levelname)s %(asctime)s %(module)s '
+                      '%(process)d %(thread)d %(message)s'
         },
-        'simple': {'format': '%(levelname)s %(message)s'},
     },
     'handlers': {
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
+            'formatter': 'verbose'
+        }
     },
     'loggers': {
-        'mylogger': {
+        'django.db.backends': {
+            'level': 'ERROR',
             'handlers': ['console'],
-            'level': 'INFO',
-        }
+            'propagate': False,
+        },
     },
 }
 
-DEBUG_PROPAGATE_EXCEPTIONS = True
 
 """
     level:
