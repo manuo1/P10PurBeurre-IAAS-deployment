@@ -2,16 +2,11 @@ import logging
 import sentry_sdk
 
 from .common import *
-from sentry_sdk import set_level
 from sentry_sdk.integrations.django import DjangoIntegration
-from sentry_sdk.integrations.logging import LoggingIntegration
-
 
 ALLOWED_HOSTS = ["165.22.118.210"]
 
 DEBUG = False
-
-set_level("DEBUG")
 
 sentry_sdk.init(
     dsn= "https://751878c9886d41ed853ed05124aa3c62@o516111.ingest.sentry.io/5622155",
@@ -32,6 +27,37 @@ sentry_sdk.init(
     # something more human-readable.
     # release="myapp@1.0.0",
 )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': (
+                '%(asctime)s [%(process)d] [%(levelname)s] '
+                + 'pathname=%(pathname)s lineno=%(lineno)s '
+                + 'funcname=%(funcName)s %(message)s'
+            ),
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'simple': {'format': '%(levelname)s %(message)s'},
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'mylogger': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        }
+    },
+}
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 """
     level:

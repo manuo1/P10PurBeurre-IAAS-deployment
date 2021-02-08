@@ -89,5 +89,4 @@ class Command(BaseCommand):
                 product_to_associate.categories.add(category_to_associate)
         self.stdout.write('\nDonnées alimentaires après la mise à jour :')
         self.stdout.write(self.db_infos())
-        logger.info('Mise à jour des données alimentaires\n{}'.format(
-            self.db_infos()))
+        logger.info('Mise à jour des données alimentaires')
