@@ -11,7 +11,7 @@ DEBUG = False
 
 sentry_logging = LoggingIntegration(
     level=logging.INFO,        # Capture info and above as breadcrumbs
-    event_level=logging.INFO  # Send errors as events
+    event_level=logging.INFO  # Send INFOs as events
 )
 
 
@@ -39,7 +39,8 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'django.log')
+            'filename': os.path.join(BASE_DIR, 'django.log'),
+            'formatter': 'verbose'
         },
 
     },
