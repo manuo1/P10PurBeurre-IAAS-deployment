@@ -14,11 +14,11 @@ sentry_logging = LoggingIntegration(
     event_level=logging.INFO  # Send INFOs as events
 )
 
-
 sentry_sdk.init(
     dsn= "https://751878c9886d41ed853ed05124aa3c62@o516111.ingest.sentry.io/5622155",
     integrations=[DjangoIntegration(), sentry_logging],
     traces_sample_rate=1.0,
+    send_default_pii=True,
 )
 
 LOGGING = {
