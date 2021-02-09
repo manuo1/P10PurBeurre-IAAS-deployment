@@ -90,6 +90,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.ID_RSA }}
           passphrase: ${{ secrets.PASSPHRASE }}
+          # run all Deployment settings and create log files if not exist
           script: |
             cd purbeurre-mo1
             git pull
