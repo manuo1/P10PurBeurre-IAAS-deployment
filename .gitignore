@@ -4,4 +4,7 @@ __pycache__
 .coverage
 staticfiles
 geckodriver
-.log
+django.log
+geckodriver.log
+populatedb.log
+supervisor_stderr.log
