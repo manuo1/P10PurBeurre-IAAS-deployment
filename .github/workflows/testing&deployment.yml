@@ -97,7 +97,8 @@ jobs:
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
             python manage.py migrate
-            echo '${{ secrets.SUDO_PASSWORD }}' | sudo mkdir -p ~/logs
-            echo '${{ secrets.SUDO_PASSWORD }}' | sudo touch -a ~/logs/supervisor_stderr.log
+            echo '${{ secrets.SUDO_PASSWORD }}' | sudo touch -a ~/purbeurre-mo1/supervisor_stderr.log
+            echo '${{ secrets.SUDO_PASSWORD }}' | sudo touch -a ~/purbeurre-mo1/django.log
+            echo '${{ secrets.SUDO_PASSWORD }}' | sudo touch -a ~/purbeurre-mo1/populatedb.log
             echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S service postgresql restart
             echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S supervisorctl restart purbeurre-mo1-gunicorn
