@@ -1,4 +1,5 @@
 import logging
+
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 
@@ -8,6 +9,7 @@ from .offdata.cleaner import Cleaner
 from .offdata.download import Download
 
 logger = logging.getLogger(__name__)
+
 
 class Command(BaseCommand):
     help = """Populate database with food products from the Open Food Fact API,

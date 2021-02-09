@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -55,7 +54,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.driver.get(self.live_server_url)
 
     def test_index(self):
-        """ test simple index display """
+        """test simple index display."""
         self.driver.find_element_by_id('home').click()
         h1 = self.driver.find_element_by_tag_name('h1').get_attribute(
             'innerHTML'
@@ -63,7 +62,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.assertTrue('Du gras, oui, mais de qualité !' in str(h1))
 
     def test_search_return_result(self):
-        """ test is search return a product """
+        """test is search return a product."""
         form = self.driver.find_element_by_id('id_search')
         form.send_keys('test product name')
         form.send_keys(Keys.ENTER)
@@ -73,7 +72,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.assertTrue(self.test_product.product_name in str(card_footer))
 
     def test_substitute_return_substitute(self):
-        """ test if substitute return a substitute"""
+        """test if substitute return a substitute."""
         form = self.driver.find_element_by_id('id_search')
         form.send_keys('test product name')
         form.send_keys(Keys.ENTER)

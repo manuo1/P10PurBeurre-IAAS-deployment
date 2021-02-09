@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import LiveServerTestCase
 from selenium import webdriver
@@ -33,7 +32,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         )
 
     def test_user_can_connect_and_disconnect(self):
-        """ test if user can connect and disconnect """
+        """test if user can connect and disconnect."""
         self.driver.get(self.live_server_url)
         self.driver.find_element_by_id('button-login').click()
         self.driver.find_element_by_id('id_username').send_keys("testusername")
@@ -43,7 +42,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.assertTrue(self.driver.find_element_by_id('button-login'))
 
     def test_user_can_display_his_profile(self):
-        """ test if user can display is profil """
+        """test if user can display is profil."""
         self.driver.get(self.live_server_url)
         self.driver.find_element_by_id('button-login').click()
         self.driver.find_element_by_id('id_username').send_keys("testusername")
@@ -56,7 +55,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.assertEqual(email, " testusername@mail.com ")
 
     def test_user_can_create_an_account(self):
-        """ test if user can create an account """
+        """test if user can create an account."""
         self.driver.get(self.live_server_url)
         self.driver.find_element_by_id('button-login').click()
         self.driver.find_element_by_id('button-create-account').click()
